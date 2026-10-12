@@ -1,0 +1,66 @@
+server:
+  port: ${SERVER_PORT:8081}
+  address: ${SERVER_ADDRESS:0.0.0.0}
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: labourconnect-backend
+  config:
+    import:
+      - "optional:file:./.env[.properties]"
+      - "optional:file:./backend/.env[.properties]"
+      - "optional:file:../backend/.env[.properties]"
+      - "optional:file:../.env[.properties]"
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/labour_connect}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 300000
+      connection-timeout: 20000
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:super_secret_labour_connect_jwt_key_must_be_at_least_32_characters_long_for_hmac256}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,http://127.0.0.1:3000,http://localhost:5174,http://127.0.0.1:5174}
+  admin:
+    init-email: ${ADMIN_INIT_EMAIL:admin@labourconnect.com}
+    init-password: ${ADMIN_INIT_PASSWORD:Admin@1234}
+  seed-data: ${APP_SEED_DATA:true}
+  google:
+    client-id: ${GOOGLE_CLIENT_ID:}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+
+logging:
+  level:
+    root: INFO
+    com.labourconnect: INFO
+    org.springframework.security: WARN
