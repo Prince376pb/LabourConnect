@@ -71,6 +71,7 @@ Thumbs.db
 
 # Project temporary tools
 .tools/
+.gemini/
 scratch/
 
 # Database dumps and local uploads

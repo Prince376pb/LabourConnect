@@ -4,7 +4,7 @@ param(
     [int]$Port = 5432,
     [string]$User = "postgres",
     [string]$Database = "labour_connect",
-    [string]$BackupDir = "$PSScriptRoot\..\backups"
+    [string]$BackupDir = "$PSScriptRoot\backups"
 )
 
 $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
